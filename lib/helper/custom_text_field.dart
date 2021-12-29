@@ -20,7 +20,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: TextFormField(
         controller: widget.emailController,
         decoration: InputDecoration(
-          labelText: widget.labelText
+          labelText: widget.labelText,
+          border: OutlineInputBorder()
         ),
       ),
     );
