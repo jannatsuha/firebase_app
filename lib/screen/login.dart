@@ -1,4 +1,8 @@
+import 'package:firebase_login/helper/custom_button.dart';
 import 'package:firebase_login/helper/custom_text_field.dart';
+import 'package:firebase_login/screen/home_page.dart';
+import 'package:firebase_login/screen/signup.dart';
+import 'package:firebase_login/utills/all_color.dart';
 import 'package:flutter/material.dart';
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -6,19 +10,79 @@ class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
+final GlobalKey<FormState> _formKey= GlobalKey();
 TextEditingController _emailController=TextEditingController();
 TextEditingController _passController=TextEditingController();
+AllColor allColor=AllColor();
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          CustomTextField(emailController: _emailController,
-          labelText: "Email",),
-          CustomTextField(emailController: _passController,
-            labelText: "Password",)
-        ],
+      body:
+      Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 80,
+            ),
+            Icon(
+              Icons.star,size: 80,color: allColor.appColor,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomTextField(emailController: _emailController,
+            labelText: "Email",
+              hintText: "Enter your email",
+            obsecureVal: false,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomTextField(emailController: _passController,
+              labelText: "Password",
+              hintText: "Enter Password",
+            obsecureVal: true,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            InkWell(
+              onTap: (){
+                if(_formKey.currentState!.validate())
+                Navigator.push(context,
+                MaterialPageRoute(builder:
+                    (context)=>HomePage()));
+              },
+              child: CustomButton(
+                height: 50,
+                width: 300,
+                btnText: "LOG IN",
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Don't have an account? ",style:
+                  TextStyle( fontSize: 18),),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder:
+                            (context)=>SignUp()));
+                  },
+                  child: Text(" Sign Up",style:
+                  TextStyle( fontSize: 18,
+                  color: allColor.appColor),),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
