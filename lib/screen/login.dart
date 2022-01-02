@@ -1,16 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_login/helper/custom_button.dart';
 import 'package:firebase_login/helper/custom_text_field.dart';
 import 'package:firebase_login/screen/home_page.dart';
 import 'package:firebase_login/screen/signup.dart';
 import 'package:firebase_login/utills/all_color.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
   _LoginState createState() => _LoginState();
 }
-final GlobalKey<FormState> _formKey= GlobalKey();
+final _auth= FirebaseAuth.instance;
+final GlobalKey<FormState> _formKey=
+GlobalKey<FormState>();
 TextEditingController _emailController=TextEditingController();
 TextEditingController _passController=TextEditingController();
 AllColor allColor=AllColor();
@@ -50,10 +54,9 @@ class _LoginState extends State<Login> {
             ),
             InkWell(
               onTap: (){
-                if(_formKey.currentState!.validate())
-                Navigator.push(context,
-                MaterialPageRoute(builder:
-                    (context)=>HomePage()));
+                signIn(
+                  _emailController.text
+                , _passController.text, context);
               },
               child: CustomButton(
                 height: 50,
@@ -86,4 +89,25 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+}
+void signIn(String email, String password
+    ,context)async{
+  if(_formKey.currentState!.validate())
+    {
+      await _auth.signInWithEmailAndPassword
+        (email: email, password: password)
+          .then((value) => {
+            Fluttertoast.showToast(
+              backgroundColor: Colors.green,
+                msg: "Login Successful!!"),
+      Navigator.push(context,
+      MaterialPageRoute(builder:
+      (context)=>HomePage()))
+      }).catchError((e){
+        Fluttertoast.showToast(
+            backgroundColor: Colors.red,
+            msg: "Wrong Information!!");
+      });
+
+    }
 }

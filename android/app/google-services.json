@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "144154890907",
+    "project_id": "batch-d",
+    "storage_bucket": "batch-d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144154890907:android:24be907b871834cf9b6c3e",
+        "android_client_info": {
+          "package_name": "com.example.firebase_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144154890907-rjhluer23b01t34fbq1avnlt34img77q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLpG4Wp7XTbfCmiKw0EzWDAVFfp2atmEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144154890907-rjhluer23b01t34fbq1avnlt34img77q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,14 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_login/helper/custom_button.dart';
 import 'package:firebase_login/helper/custom_text_field.dart';
 import 'package:firebase_login/screen/login.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 
   @override
   _SignUpState createState() => _SignUpState();
 }
-final GlobalKey<FormState> _formKey= GlobalKey();
+final _auth=FirebaseAuth.instance;
+ final GlobalKey<FormState> _formKeySignUp
+ = GlobalKey<FormState>();
 TextEditingController _emailController=TextEditingController();
 TextEditingController _passController=TextEditingController();
 TextEditingController _confirmPassController=TextEditingController();
@@ -18,7 +22,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
-          key: _formKey,
+          key: _formKeySignUp,
           child: Column(
             children: [
               SizedBox(
@@ -57,10 +61,10 @@ class _SignUpState extends State<SignUp> {
               ),
               InkWell(
                 onTap: (){
-                  if(_formKey.currentState!.validate())
-                    Navigator.push(context,
-                        MaterialPageRoute(builder:
-                            (context)=>Login()));
+                  signUp(
+                    _emailController.text,
+                      _passController.text,
+                      context);
                 },
                 child: CustomButton(
                   height: 50,
@@ -78,4 +82,22 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+}
+void signUp(String email, String password, context)async{
+  if(_formKeySignUp.currentState!.validate())
+    {
+      await _auth.createUserWithEmailAndPassword
+        (email: email, password: password)
+          .then((value) => {
+      Fluttertoast.showToast
+      (
+       //toastLength: Duration(),
+          msg:"Account Created Successfully!!"),
+          Navigator.push(context,
+          MaterialPageRoute(builder:
+             (context)=>Login()))
+      }).catchError((e){
+        Fluttertoast.showToast(msg: e.message);
+      });
+    }
 }
