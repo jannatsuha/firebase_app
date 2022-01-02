@@ -11,7 +11,45 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("Home Page"),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+         // physics: ClampingScrollPhysics(),
+          reverse: true,
+          child: Row(
+            children: [
+              Container(
+                width: 200,
+                  height: 200,
+                  color: Colors.green,
+                  child: Text("Home Page 1")),
+              Container(
+                  width: 200,
+                  height: 200,
+                  color: Colors.green,
+                  child: Text("Home Page")),
+              Container(
+                  width: 200,
+                  height: 200,
+                  color: Colors.green,
+                  child: Text("Home Page")),
+              Container(
+                  width: 200,
+                  height: 200,
+                  color: Colors.green,
+                  child: Text("Home Page")),
+              Container(
+                  width: 200,
+                  height: 200,
+                  color: Colors.green,
+                  child: Text("Home Page")),
+              Container(
+                  width: 200,
+                  height: 200,
+                  color: Colors.green,
+                  child: Text("last page")),
+            ],
+          ),
+        ),
       ),
     );
   }

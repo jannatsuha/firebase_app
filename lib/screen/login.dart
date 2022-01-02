@@ -13,12 +13,13 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 final _auth= FirebaseAuth.instance;
-final GlobalKey<FormState> _formKey=
-GlobalKey<FormState>();
+
 TextEditingController _emailController=TextEditingController();
 TextEditingController _passController=TextEditingController();
 AllColor allColor=AllColor();
 class _LoginState extends State<Login> {
+  final GlobalKey<FormState> _formKey=
+  GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +57,8 @@ class _LoginState extends State<Login> {
               onTap: (){
                 signIn(
                   _emailController.text
-                , _passController.text, context);
+                , _passController.text,
+                    context, _formKey);
               },
               child: CustomButton(
                 height: 50,
@@ -91,7 +93,7 @@ class _LoginState extends State<Login> {
   }
 }
 void signIn(String email, String password
-    ,context)async{
+    ,context, _formKey)async{
   if(_formKey.currentState!.validate())
     {
       await _auth.signInWithEmailAndPassword
@@ -100,7 +102,7 @@ void signIn(String email, String password
             Fluttertoast.showToast(
               backgroundColor: Colors.green,
                 msg: "Login Successful!!"),
-      Navigator.push(context,
+      Navigator.pushReplacement(context,
       MaterialPageRoute(builder:
       (context)=>HomePage()))
       }).catchError((e){

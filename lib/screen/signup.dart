@@ -11,12 +11,13 @@ class SignUp extends StatefulWidget {
   _SignUpState createState() => _SignUpState();
 }
 final _auth=FirebaseAuth.instance;
- final GlobalKey<FormState> _formKeySignUp
- = GlobalKey<FormState>();
+
 TextEditingController _emailController=TextEditingController();
 TextEditingController _passController=TextEditingController();
 TextEditingController _confirmPassController=TextEditingController();
 class _SignUpState extends State<SignUp> {
+  final _formKeySignUp
+  = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +65,7 @@ class _SignUpState extends State<SignUp> {
                   signUp(
                     _emailController.text,
                       _passController.text,
-                      context);
+                      context,_formKeySignUp);
                 },
                 child: CustomButton(
                   height: 50,
@@ -83,7 +84,8 @@ class _SignUpState extends State<SignUp> {
     );
   }
 }
-void signUp(String email, String password, context)async{
+void signUp(String email, String password,
+    context, _formKeySignUp)async{
   if(_formKeySignUp.currentState!.validate())
     {
       await _auth.createUserWithEmailAndPassword
@@ -93,7 +95,7 @@ void signUp(String email, String password, context)async{
       (
        //toastLength: Duration(),
           msg:"Account Created Successfully!!"),
-          Navigator.push(context,
+          Navigator.pushReplacement(context,
           MaterialPageRoute(builder:
              (context)=>Login()))
       }).catchError((e){
