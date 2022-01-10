@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_login/model/user_model.dart';
+import 'package:firebase_login/screen/login.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 class HomePage extends StatefulWidget {
@@ -59,6 +60,15 @@ class _HomePageState extends State<HomePage> {
               Text(userModel.name.toString()),
               Text(userModel.phone.toString()),
               Text(userModel.email.toString()),
+
+              ElevatedButton(
+                  onPressed: (){
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacement
+                      (context, MaterialPageRoute
+                      (builder: (context)=>Login()));
+                  },
+                  child: Text("Log Out"))
             ],
           ): CircularProgressIndicator()
         ),
